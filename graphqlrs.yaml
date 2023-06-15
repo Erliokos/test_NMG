@@ -1,0 +1,5 @@
+projects:
+  test_NMG:
+    schema: 'server/schema.gql'
+    documents: 'client/**/*.graphql'
+    documentsIncludes: ['server/schema.gql', client/src/generated]

@@ -1,5 +1,23 @@
-mutation Create($input: CollectionInput!){
-  create(input: $input){
-    id
+mutation Create($input: CollectionInput!) {
+  create(input: $input) {
+    ...Collection
   }
+}
+
+mutation Delete($id: Float!){
+  delete(id: $id)
+}
+
+query Get {
+  get {
+    ...Collection
+  }
+}
+
+fragment Collection on CollectionEntity {
+  id
+  caption
+  text
+  createAt
+  updateAt
 }

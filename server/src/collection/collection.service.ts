@@ -18,4 +18,9 @@ export class CollectionService {
   async get(): Promise<CollectionEntity[]> {
     return await this.collectionEntity.find();
   }
+
+  async delete(id: number): Promise<boolean> {
+    await this.collectionEntity.delete({ id });
+    return true;
+  }
 }

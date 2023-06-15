@@ -18,4 +18,9 @@ export class CollectionResolver {
   async get(): Promise<CollectionEntity[]> {
     return await this.collectionService.get();
   }
+
+  @Mutation(() => Boolean)
+  async delete(@Args('id') id: number): Promise<boolean> {
+    return this.collectionService.delete(id);
+  }
 }

@@ -4,14 +4,22 @@ import * as Types from './operations';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-
+export const CollectionFragmentDoc = gql`
+    fragment Collection on CollectionEntity {
+  id
+  caption
+  text
+  createAt
+  updateAt
+}
+    `;
 export const CreateDocument = gql`
     mutation Create($input: CollectionInput!) {
   create(input: $input) {
-    id
+    ...Collection
   }
 }
-    `;
+    ${CollectionFragmentDoc}`;
 export type CreateMutationFn = Apollo.MutationFunction<Types.CreateMutation, Types.CreateMutationVariables>;
 
 /**
@@ -38,3 +46,68 @@ export function useCreateMutation(baseOptions?: Apollo.MutationHookOptions<Types
 export type CreateMutationHookResult = ReturnType<typeof useCreateMutation>;
 export type CreateMutationResult = Apollo.MutationResult<Types.CreateMutation>;
 export type CreateMutationOptions = Apollo.BaseMutationOptions<Types.CreateMutation, Types.CreateMutationVariables>;
+export const DeleteDocument = gql`
+    mutation Delete($id: Float!) {
+  delete(id: $id)
+}
+    `;
+export type DeleteMutationFn = Apollo.MutationFunction<Types.DeleteMutation, Types.DeleteMutationVariables>;
+
+/**
+ * __useDeleteMutation__
+ *
+ * To run a mutation, you first call `useDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMutation, { data, loading, error }] = useDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMutation(baseOptions?: Apollo.MutationHookOptions<Types.DeleteMutation, Types.DeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.DeleteMutation, Types.DeleteMutationVariables>(DeleteDocument, options);
+      }
+export type DeleteMutationHookResult = ReturnType<typeof useDeleteMutation>;
+export type DeleteMutationResult = Apollo.MutationResult<Types.DeleteMutation>;
+export type DeleteMutationOptions = Apollo.BaseMutationOptions<Types.DeleteMutation, Types.DeleteMutationVariables>;
+export const GetDocument = gql`
+    query Get {
+  get {
+    ...Collection
+  }
+}
+    ${CollectionFragmentDoc}`;
+
+/**
+ * __useGetQuery__
+ *
+ * To run a query within a React component, call `useGetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetQuery(baseOptions?: Apollo.QueryHookOptions<Types.GetQuery, Types.GetQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Types.GetQuery, Types.GetQueryVariables>(GetDocument, options);
+      }
+export function useGetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Types.GetQuery, Types.GetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Types.GetQuery, Types.GetQueryVariables>(GetDocument, options);
+        }
+export type GetQueryHookResult = ReturnType<typeof useGetQuery>;
+export type GetLazyQueryHookResult = ReturnType<typeof useGetLazyQuery>;
+export type GetQueryResult = Apollo.QueryResult<Types.GetQuery, Types.GetQueryVariables>;

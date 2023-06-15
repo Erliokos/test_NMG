@@ -30,11 +30,17 @@ export type CollectionInput = {
 
 export type Mutation = {
   create: CollectionEntity;
+  delete: Scalars['Boolean'];
 };
 
 
 export type MutationCreateArgs = {
   input: CollectionInput;
+};
+
+
+export type MutationDeleteArgs = {
+  id: Scalars['Float'];
 };
 
 export type Query = {
@@ -46,4 +52,18 @@ export type CreateMutationVariables = Exact<{
 }>;
 
 
-export type CreateMutation = { create: { id: string } };
+export type CreateMutation = { create: { id: string, caption: string, text: string, createAt: any, updateAt: any } };
+
+export type DeleteMutationVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+
+export type DeleteMutation = { delete: boolean };
+
+export type GetQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetQuery = { get: Array<{ id: string, caption: string, text: string, createAt: any, updateAt: any }> };
+
+export type CollectionFragment = { id: string, caption: string, text: string, createAt: any, updateAt: any };

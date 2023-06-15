@@ -1,7 +1,0 @@
-# Для работы с GraphQL использующих синтаксис Graphql Config 3.0: для VS Code
-projects:
-  client:
-    schema: 'server/schema.gql'
-    documents: 'client/**/*.graphql'
-    # Исключает шаринг fragment'ов между backend и frontend
-    documentsIncludes: ['server/schema.gql', client/generated]
